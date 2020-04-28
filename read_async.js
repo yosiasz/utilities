@@ -15,7 +15,13 @@ var folder = "C:/jsons";
             var jsonFile = path.join(folder, file);
             const stat = await fs.promises.stat( jsonFile );
             if (stat.isFile() && jsonFile.indexOf('.json')>=0) {
-                console.log(jsonFile);
+              fs.readFile(jsonFile, 'utf8', (err, jsonString) => {
+                if (err) {
+                    console.log("File read failed:", err)
+                    return
+                }
+                console.log('File data:', jsonString) 
+            })
             } 
         }
     }
@@ -24,26 +30,3 @@ var folder = "C:/jsons";
         console.error( "We've thrown! Whoops!", e );
     }
 })();
-/* 
-fs.promises.readdir(folder, function (err, files) {
-  if (err) {
-    console.error("Could not list the directory.", err);
-    process.exit(1);
-  }
-  
-  files.forEach(function (file, index) {
-    var jsonFile = path.join(folder, file);
-  
-    fs.stat(jsonFile, function (error, stat) {
-      if (error) {
-        console.error("Error stating file.", error);
-        return;
-      }
-
-      if (stat.isFile() && jsonFile.indexOf('.json')>=0) {
-
-      }    
-    });
-
-  });
-}); */
