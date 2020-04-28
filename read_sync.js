@@ -4,6 +4,7 @@ var path = require('path');
 var process = require("process");
 
 var folder = "C:/jsons";
+var mergedFiles = [];
 
 fs.readdir(folder, function (err, files) {
   if (err) {
@@ -22,14 +23,14 @@ fs.readdir(folder, function (err, files) {
 
       if (stat.isFile() && jsonFile.indexOf('.json')>=0) {
         //var json = JSON.parse(jsonFile);
-        fs.readFile(jsonFile, 'utf8', (err, jsonString) => {
+        fs.readFileSync(jsonFile, 'utf8', (err, jsonString) => {
           if (err) {
               console.log("Error reading file from disk:", err)
               return
           }
           try {
               const customer = JSON.parse(jsonString)
-              console.log("Customer address is:", customer.address) // => "Customer address is: Infinity Loop Drive"
+              mergedFiles.push(JSON.stringify(jsonString));
             } catch(err) {
                 console.log('Error parsing JSON string:', err)
             }
